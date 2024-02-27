@@ -1,5 +1,6 @@
 import Field from '../Field';
 import InformationLayout from '../Information';
+import Button from '../../core/ui/Button';
 
 const GameLayout = ({
 	currentPlayer,
@@ -10,6 +11,7 @@ const GameLayout = ({
 	setIsDraw,
 	field,
 	setField,
+	restartGame,
 }) => {
 	return (
 		<>
@@ -25,6 +27,7 @@ const GameLayout = ({
 				field={field}
 				setField={setField}
 			/>
+			{isGameEnded && <Button onClick={restartGame}>Начать заново</Button>}
 		</>
 	);
 };

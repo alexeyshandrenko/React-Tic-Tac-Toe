@@ -5,6 +5,7 @@ const FieldLayout = ({
 	setIsGameEnded,
 	setIsDraw,
 	field,
+	doStep,
 	setField,
 }) => {
 	return (
@@ -12,7 +13,7 @@ const FieldLayout = ({
 			{field.map((field, index) => {
 				return (
 					<li className={styles.fieldCell} key={index}>
-						<button></button>
+						<button onClick={() => doStep(index)}>{field}</button>
 					</li>
 				);
 			})}

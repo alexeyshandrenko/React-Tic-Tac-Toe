@@ -3,9 +3,16 @@ import GameLayout from './GameLayout';
 
 const Game = () => {
 	const [currentPlayer, setCurrentPlayer] = useState('x');
-	const [isGameEnded, setIsGameEnded] = useState(false);
+	const [isGameEnded, setIsGameEnded] = useState(true);
 	const [isDraw, setIsDraw] = useState(false);
 	const [field, setField] = useState(['', '', '', '', '', '', '', '', '']);
+
+	const restartGame = () => {
+		setCurrentPlayer('x');
+		setIsGameEnded(false);
+		setIsDraw(false);
+		setField(['', '', '', '', '', '', '', '', '']);
+	};
 
 	return (
 		<GameLayout
@@ -17,6 +24,7 @@ const Game = () => {
 			setIsDraw={setIsDraw}
 			field={field}
 			setField={setField}
+			restartGame={restartGame}
 		/>
 	);
 };
