@@ -8,7 +8,7 @@
 }
 
 .fieldCell {
-	border: 1px solid #1e1e1e;
+	border: 4px solid #393939;
 }
 
 .fieldCell > button {
@@ -18,6 +18,9 @@
 	transition: 0.3s;
 	color: #1e1e1e;
 	font-size: 22px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .fieldCell > button:hover {

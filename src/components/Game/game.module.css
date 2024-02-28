@@ -1,0 +1,5 @@
+.layout {
+	min-height: 700px;
+	position: relative;
+	z-index: 1000;
+}

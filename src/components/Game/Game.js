@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import GameLayout from './GameLayout';
 
+import { loadFull } from 'tsparticles';
+
 const Game = () => {
 	const [currentPlayer, setCurrentPlayer] = useState('x');
 	const [isGameEnded, setIsGameEnded] = useState(false);
 	const [isDraw, setIsDraw] = useState(false);
 	const [field, setField] = useState(['', '', '', '', '', '', '', '', '']);
+
+	const particleInit = async (engine) => {
+		await loadFull(engine);
+	};
 
 	const restartGame = () => {
 		setCurrentPlayer('x');
@@ -25,6 +31,7 @@ const Game = () => {
 			field={field}
 			setField={setField}
 			restartGame={restartGame}
+			particleInit={particleInit}
 		/>
 	);
 };
