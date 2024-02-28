@@ -21,6 +21,7 @@ const GameLayout = ({
 				isDraw={isDraw}
 			/>
 			<Field
+				currentPlayer={currentPlayer}
 				setCurrentPlayer={setCurrentPlayer}
 				setIsGameEnded={setIsGameEnded}
 				setIsDraw={setIsDraw}
