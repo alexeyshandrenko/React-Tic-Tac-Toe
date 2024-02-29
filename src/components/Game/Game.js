@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import GameLayout from './GameLayout';
-
+import { WINNING_STRATEGIES } from '../../core/constants/winning';
+import { defineDraw, defineVictory } from '../../core/constants/utils';
 import { loadFull } from 'tsparticles';
 
 const Game = () => {
@@ -20,18 +21,33 @@ const Game = () => {
 		setField(['', '', '', '', '', '', '', '', '']);
 	};
 
+	const doStep = (index) => {
+		if (!field[index] && !isGameEnded && !isDraw) {
+			const newField = [...field];
+			newField[index] = currentPlayer;
+			const isWin = defineVictory(newField, currentPlayer, WINNING_STRATEGIES);
+			const isDraw = defineDraw(newField);
+			if (isWin) {
+				setIsGameEnded(true);
+			} else if (isDraw) {
+				setIsGameEnded(true);
+				setIsDraw(true);
+			} else {
+				setCurrentPlayer(currentPlayer === 'x' ? '0' : 'x');
+			}
+			setField(newField);
+		}
+	};
+
 	return (
 		<GameLayout
 			currentPlayer={currentPlayer}
-			setCurrentPlayer={setCurrentPlayer}
 			isGameEnded={isGameEnded}
-			setIsGameEnded={setIsGameEnded}
 			isDraw={isDraw}
-			setIsDraw={setIsDraw}
 			field={field}
-			setField={setField}
 			restartGame={restartGame}
 			particleInit={particleInit}
+			doStep={doStep}
 		/>
 	);
 };

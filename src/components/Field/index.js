@@ -1,3 +1,3 @@
-import Field from './Field';
+import FieldLayout from './FieldLayout';
 
-export default Field;
+export default FieldLayout;
