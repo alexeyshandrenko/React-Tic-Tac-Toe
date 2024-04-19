@@ -1,31 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GameLayout from './GameLayout';
 import { WINNING_STRATEGIES } from '../../core/constants/winning';
 import { defineDraw, defineVictory } from '../../core/constants/utils';
 import { loadFull } from 'tsparticles';
+import { store } from '../../store/store';
+import { CHANGE_PLAYER_ACTION, CHANGE_FIELD_ACTION } from '../../store/actions/actions';
 
 const Game = () => {
-	const [currentPlayer, setCurrentPlayer] = useState('x');
 	const [isGameEnded, setIsGameEnded] = useState(false);
 	const [isDraw, setIsDraw] = useState(false);
-	const [field, setField] = useState(['', '', '', '', '', '', '', '', '']);
+
+	const { getState, dispatch, subscribe } = store;
+	const [state, setState] = useState(getState());
+
+	useEffect(() => {
+		const unsubscribe = subscribe(() => setState(getState()));
+		return unsubscribe;
+	}, [subscribe]);
 
 	const particleInit = async (engine) => {
 		await loadFull(engine);
 	};
 
 	const restartGame = () => {
-		setCurrentPlayer('x');
 		setIsGameEnded(false);
 		setIsDraw(false);
-		setField(['', '', '', '', '', '', '', '', '']);
+		dispatch({ type: CHANGE_PLAYER_ACTION });
+		dispatch({
+			type: CHANGE_FIELD_ACTION,
+			payload: ['', '', '', '', '', '', '', '', ''],
+		});
 	};
 
 	const doStep = (index) => {
-		if (!field[index] && !isGameEnded && !isDraw) {
-			const newField = [...field];
-			newField[index] = currentPlayer;
-			const isWin = defineVictory(newField, currentPlayer, WINNING_STRATEGIES);
+		if (!state.field[index] && !isGameEnded && !isDraw) {
+			const newField = [...state.field];
+			newField[index] = state.currentPlayer;
+			const isWin = defineVictory(
+				newField,
+				state.currentPlayer,
+				WINNING_STRATEGIES,
+			);
 			const isDraw = defineDraw(newField);
 			if (isWin) {
 				setIsGameEnded(true);
@@ -33,18 +48,19 @@ const Game = () => {
 				setIsGameEnded(true);
 				setIsDraw(true);
 			} else {
-				setCurrentPlayer(currentPlayer === 'x' ? '0' : 'x');
+				dispatch({ type: CHANGE_PLAYER_ACTION });
 			}
-			setField(newField);
+			dispatch({
+				type: CHANGE_FIELD_ACTION,
+				payload: newField,
+			});
 		}
 	};
 
 	return (
 		<GameLayout
-			currentPlayer={currentPlayer}
 			isGameEnded={isGameEnded}
 			isDraw={isDraw}
-			field={field}
 			restartGame={restartGame}
 			particleInit={particleInit}
 			doStep={doStep}

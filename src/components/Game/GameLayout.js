@@ -6,23 +6,11 @@ import Particles from 'react-particles';
 
 import { particleConfig } from '../../core/config/particleConfig';
 
-const GameLayout = ({
-	currentPlayer,
-	isGameEnded,
-	isDraw,
-	field,
-	restartGame,
-	particleInit,
-	doStep,
-}) => {
+const GameLayout = ({ isGameEnded, isDraw, restartGame, particleInit, doStep }) => {
 	return (
 		<main className={styles.layout}>
-			<InformationLayout
-				currentPlayer={currentPlayer}
-				isGameEnded={isGameEnded}
-				isDraw={isDraw}
-			/>
-			<FieldLayout field={field} doStep={doStep} />
+			<InformationLayout isGameEnded={isGameEnded} isDraw={isDraw} />
+			<FieldLayout doStep={doStep} />
 			{isGameEnded && <Button onClick={restartGame}>Начать заново</Button>}
 			{isGameEnded && !isDraw && (
 				<Particles options={particleConfig} init={particleInit} />

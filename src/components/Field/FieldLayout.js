@@ -1,8 +1,12 @@
 import styles from './field.module.css';
 import x from './../../assets/x.svg';
 import o from './../../assets/o.svg';
+import { store } from '../../store/store';
 
-const FieldLayout = ({ field, doStep }) => {
+const FieldLayout = ({ doStep }) => {
+	const { getState } = store;
+	const { field } = getState();
+
 	return (
 		<ul className={styles.field}>
 			{field.map((field, index) => {
